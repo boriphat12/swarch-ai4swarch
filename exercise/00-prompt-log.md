@@ -2,19 +2,19 @@
 
 # บันทึกการใช้ prompt
 
-**ชื่อ / รหัสนิสิต:**
-**agent ที่ใช้:** เช่น GitHub Copilot (Agent mode), Gemini Code Assist, Gemini CLI, Claude Code, Codex, Cursor, Cline: …
-**โมเดล:** …
-**แพ็กเกจที่ใช้:** เช่น Copilot Student, Copilot Free, Gemini รุ่นฟรี: …
+**ชื่อ / รหัสนิสิต: บริพัตร อรัญยกานนท์**
+**agent ที่ใช้: Claude Code (VS Code extension)**
+**โมเดล: Opus 5.5**
+**แพ็กเกจที่ใช้: Claude pro**
 
 บันทึกทุกคำขอที่ส่งให้ agent ช่อง "ไฟล์ที่ agent อ่าน" คือไฟล์ที่ agent รายงาน หรือที่นิสิตเห็นว่า agent เปิด
 
-| # | งาน / run | agent + โมเดล | ข้อความที่ส่ง (ย่อ) | ไฟล์ที่ agent อ่าน | อยู่ในขอบเขตหลักฐานที่อนุญาตหรือไม่ | มีประโยชน์ (1–5) | หมายเหตุ |
-|---|---|---|---|---|---|---|---|
-| 1 | 1-A | | `prompts/1-…` run A | | | | |
-| 2 | 1-B | | `prompts/1-…` run B | | | | |
-| 3 | 2-a | | `prompts/2-…` run a | | | | |
-| 4 | 2-b | | `prompts/2-…` run b | | | | |
-| 5 | 3 | | `prompts/3-…` | | | | |
-| 6 | | | | | | | |
-| 7 | | | | | | | |
+| #   | งาน / run      | agent + โมเดล                       | ข้อความที่ส่ง (ย่อ)                                                                                 | ไฟล์ที่ agent อ่าน                                                                                                                                                        | อยู่ในขอบเขตหลักฐานที่อนุญาตหรือไม่      | มีประโยชน์ (1–5) | หมายเหตุ                                                                         |
+| --- | -------------- | ----------------------------------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- | ---------------- | -------------------------------------------------------------------------------- |
+| 1   | 1-A            | claude opus5.5                      | `prompts/1-…` run A                                                                                 | `prompts/1-recover-architecture.md`, `system/online-boutique/protos/demo.proto`                                                                                           | อยู่                                     | 3                | ไม่มี dependency                                                                 |
+| 2   | 1-B            | claude opus5.5                      | `prompts/1-…` run B                                                                                 | `prompts/1-recover-architecture.md`, `system/online-boutique/protos/demo.proto`, `system/online-boutique/kubernetes-manifests/`                                           | อยู่                                     | 4                | ครบถ้วนในระดับนึง                                                                |
+| 3   | 2-a            | claude opus5.5                      | `prompts/2-…` run a                                                                                 | `prompts/2-write-adr.md`, `docs/adr/template.md`                                                                                                                          | อยู่                                     | 4                | อ่านไฟล์ในขอบเขต แต่ทำผิดกฎ: ใช้คำสั่ง `cat` ใน terminal                         |
+| 4   | 2-b            | claude opus5.5                      | `prompts/2-…` run b                                                                                 | `prompts/2-write-adr.md`, `docs/adr/template.md`, `docs/scenario.md`, `docs/adr/0001-use-redis-for-cart-storage.md`, `system/online-boutique/src/checkoutservice/main.go` | อยู่                                     | 4                | อ่านไฟล์ในขอบเขต แต่ทำผิดกฎ: ใช้คำสั่ง `cat` ใน terminal                         |
+| 5   | 3              | claude opus5.5                      | `prompts/3-review-adr.md` adr: `docs/adr/0002-publish-order-placed-to-rabbitmq.md`, language: Thai  | `prompts/3-review-adr.md`, `docs/adr/0002-publish-order-placed-to-rabbitmq.md`, `docs/scenario.md`                                                                        | อยู่                                     | 5                | ไม่ได้ตรวจเลขบรรทัดใน `main.go` ที่ ADR อ้าง เพราะอยู่นอกขอบเขต (ระบุไว้ในรีวิว) |
+| 6   | 1 (ตรวจ Run B) | Claude Code (desktop app), opus 5.5 | ขอให้ช่วยชี้จุดในโค้ดสำหรับตรวจ dependency และช่วยร่างตารางตรวจสอบ, สิ่งที่ขาดหายไป, คำตอบสะท้อนคิด | `exercise/outputs/1A/1B`, `src/frontend`, `src/checkoutservice`, `src/recommendationservice`, `src/cartservice`, `kubernetes-manifests/`                                  | ไม่ใช่ run ของโจทย์ (session ผู้ช่วยแยก) | 5                | ผมตรวจเอง 5 แถว                                                                  |
+| 7   |                |                                     |                                                                                                     |                                                                                                                                                                           |                                          |                  |                                                                                  |
